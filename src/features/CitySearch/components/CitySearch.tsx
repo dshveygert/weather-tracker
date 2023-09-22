@@ -4,6 +4,8 @@ import './citySearch.sass';
 import {getCityListRequest} from "../api/getCityList";
 import useDebounce from "../../../hooks/useDebounce";
 import {useTranslation} from 'react-i18next';
+import {cityStorage} from "../../../utils/localStorage/utils/localStorage";
+import {generateCityId} from "../../../utils/cityId";
 
 const CitySearch: FC = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -22,10 +24,13 @@ const CitySearch: FC = () => {
 
     const handleCityAdd = useCallback(() => {
         const cityToAdd = getCityListRequest.data?.find(item => {
-            const {name, country, state, lat, lon} = item;
-            return `${name},${state},${country},lat=${lat},lon=${lon}` === city;
+            return generateCityId(item) === city;
         });
-        console.log('handleCityAdd', cityToAdd);
+        if (cityToAdd) {
+            const {name, country, lat, lon} = cityToAdd;
+            const id = generateCityId(cityToAdd);
+            cityToAdd && cityStorage.addItem(id, {cityName: name, country, lat, lon, id});
+        }
     }, [city]);
 
     const isAddCityDisabled = !city;
@@ -35,9 +40,9 @@ const CitySearch: FC = () => {
             setIsLoading(true);
             getCityListRequest.send(debouncedCitySearch).then(result => {
                 result && result.length && setCityOptions(result.map(item => {
-                    const {name, local_names, country, state, lat, lon} = item;
+                    const {name, local_names, country} = item;
                     const label = local_names && local_names['en'] ? `${local_names['en']}, ${country}` : `${name}, ${country}`;
-                    const value = `${name},${state},${country},lat=${lat},lon=${lon}`; // Ant Select needs a unique key
+                    const value = generateCityId(item); // Ant Select needs a unique key
                     return {value, label};
                 }));
                 setIsLoading(false);

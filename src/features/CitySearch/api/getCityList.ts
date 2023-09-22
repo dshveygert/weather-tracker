@@ -1,7 +1,7 @@
-import {City} from "../types";
 import {publicHttp, weatherApiKey} from "../../../services/httpClient";
 import {queryParamsSerializer} from "../../../utils/queryParamsSerializer";
 import ApiRequests from "../../../services/apiRequests";
+import {City} from "../../../types/sharedTypes";
 
 const apiUrl = `/geo/1.0/direct`;
 const getCityList = (text: string) => {
