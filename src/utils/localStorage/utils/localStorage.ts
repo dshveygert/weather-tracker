@@ -14,6 +14,13 @@ class LocalStorage<DataType, ItemType> {
         this.token = token;
     };
 
+    addItem = (id: string, item: ItemType) => {
+        const existItems = this.getStorageItem();
+        // @ts-ignore
+        existItems[id] = item;
+        this.setStorageItem(JSON.stringify(existItems));
+    }
+
     private setStorageItem = (data: string): void => {
         localStorage.setItem(this.token, data);
     };
@@ -21,13 +28,6 @@ class LocalStorage<DataType, ItemType> {
     private getStorageItem = (): DataType => {
         const storageData = localStorage.getItem(this.token) ?? '';
         return !!storageData ? JSON.parse(storageData) : {};
-    }
-
-    addItem = (id: string, item: ItemType) => {
-        const existItems = this.getStorageItem();
-        // @ts-ignore
-        existItems[id] = item;
-        this.setStorageItem(JSON.stringify(existItems));
     }
 
 }

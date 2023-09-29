@@ -13,7 +13,7 @@ const CitySearch: FC = () => {
     const [citySearch, setCitySearch] = useState<string>('');
     const [cityOptions, setCityOptions] = useState<SelectProps['options']>([]);
     const debouncedCitySearch = useDebounce(citySearch, 1000);
-    const {t} = useTranslation(['citySearch', 'index']);
+    const {t} = useTranslation();
     const handleSearch = (searchText: string) => {
         setCitySearch(searchText);
     };
@@ -65,7 +65,7 @@ const CitySearch: FC = () => {
             loading={isLoading}
         />
         <Button type="primary" disabled={isAddCityDisabled}
-                onClick={handleCityAdd}>{t('citySearch:buttons.add')}</Button>
+                onClick={handleCityAdd}>{t('buttons.add')}</Button>
     </div>;
 };
 export default CitySearch;

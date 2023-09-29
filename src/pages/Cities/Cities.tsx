@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
-import WeatherCard from "../../widgets/WeatherCard/WeatherCard";
+
+import CitySearch from '../../features/CitySearch/components/CitySearch';
+import WeatherCards from '../../widgets/WeatherCards/components/WeatherCards';
 import './cities.sass';
-import CitySearch from "../../features/CitySearch/components/CitySearch";
 
 const Cities: FC = () => {
     return <div className={'cities'}>
@@ -9,9 +10,7 @@ const Cities: FC = () => {
             <CitySearch/>
         </div>
         <div className={'row'}>
-            {[1, 2, 3, 4, 5, 6].map((item, idx) => {
-                return <WeatherCard key={idx}/>
-            })}
+            <WeatherCards/>
         </div>
     </div>;
 };

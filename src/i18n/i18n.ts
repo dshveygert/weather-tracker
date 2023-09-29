@@ -2,18 +2,22 @@ import {use} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import backend from 'i18next-http-backend';
 
-const i18n = use(initReactI18next)
-    .use(backend)
+const i18n = use(backend)
+    .use(initReactI18next)
     .init({
-        debug: true,
         fallbackLng: 'en',
+        lng: 'en',
+        debug: false,
+        returnNull: false,
+        detection: {
+            order: ['queryString', 'cookie'],
+            cache: ['cookie']
+        },
         interpolation: {
             escapeValue: false
         },
         backend: {
-            loadPath: `/localization/{{lng}}/{{ns}}.json`,
-            queryStringParams: { v: '1.0' }
+            queryStringParams: {v: '1.0'}
         }
-    });
-
+    }).then();
 export default i18n;
