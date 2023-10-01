@@ -1,10 +1,8 @@
-import {publicHttp, weatherApiKey} from "../../../services/httpClient";
-import {queryParamsSerializer} from "../../../utils/queryParamsSerializer";
-import ApiRequests from "../../../services/apiRequests";
-import {City} from "../../../types/sharedTypes";
+import {publicHttp, weatherApiKey} from '../../../services/httpClient';
+import {queryParamsSerializer} from '../../../utils/queryParamsSerializer';
 
 const apiUrl = `/geo/1.0/direct`;
-const getCityList = (text: string) => {
+export const getCityList = (text: string) => {
     const url = `${apiUrl}`;
     const params = {
         q: text,
@@ -19,7 +17,3 @@ const getCityList = (text: string) => {
         }
     });
 };
-
-export const getCityListRequest = new ApiRequests<string, City[]>({
-    apiFunction: getCityList
-})
