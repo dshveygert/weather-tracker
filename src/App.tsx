@@ -1,20 +1,40 @@
-import React from 'react';
-import {ConfigProvider, Layout, Space} from 'antd';
+import React, {FC} from 'react';
+import {Col, ConfigProvider, Layout, Row, Space} from 'antd';
+import {defaultTheme} from './consts/theme';
+import Cities from "./pages/Cities/Cities";
 import './App.sass';
-import {defaultTheme} from "./components/antd/theme";
+import {RootStoreProvider} from "./store/rootStore.context";
+import LanguageSwitch from "./features/LanguageSwitch/components/LanguageSwitch";
 
 const {Header, Content} = Layout;
 
-function App() {
+const App: FC = () => {
+
     return (
         <ConfigProvider
             theme={defaultTheme}
         >
             <Space direction="vertical" className={'space'}>
-                <Layout>
-                    <Header ></Header>
-                    <Content></Content>
-                </Layout>
+                <RootStoreProvider>
+                    <Layout>
+                        <Header>
+                            <Row justify="space-between">
+                                <Col xs={{span: 24, offset: 0}} lg={{span: 22, offset: 1}}>
+                                    <div className="headerWrapper">
+                                        <LanguageSwitch/>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Header>
+                        <Content>
+                            <Row justify="space-between">
+                                <Col xs={{span: 24, offset: 0}} lg={{span: 22, offset: 1}}>
+                                    <Cities/>
+                                </Col>
+                            </Row>
+                        </Content>
+                    </Layout>
+                </RootStoreProvider>
             </Space>
         </ConfigProvider>
     );
