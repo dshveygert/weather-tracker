@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
+import {CitySearch} from '../../features/CitySearch';
 
-import CitySearch from '../../features/CitySearch/components/CitySearch';
 import WeatherCards from '../../widgets/WeatherCards/components/WeatherCards';
 import './cities.sass';
 

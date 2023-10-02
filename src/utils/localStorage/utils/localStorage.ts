@@ -1,5 +1,6 @@
 import {CitiesStorage, CitySettings, CityStorage} from "../types";
 
+const languageToken = 'lng';
 const citiesToken = 'cities';
 const citiesSettingsToken = 'settings';
 
@@ -21,6 +22,10 @@ class LocalStorage<DataType, ItemType> {
         this.setStorageItem(JSON.stringify(existItems));
     }
 
+    getItem = (): DataType => {
+        return this.getStorageItem();
+    }
+
     private setStorageItem = (data: string): void => {
         localStorage.setItem(this.token, data);
     };
@@ -32,5 +37,6 @@ class LocalStorage<DataType, ItemType> {
 
 }
 
+export const languageStorage = new LocalStorage<{current: string}, string>({token: languageToken});
 export const cityStorage = new LocalStorage<CitiesStorage<CityStorage>, CityStorage>({token: citiesToken});
 export const citySettingsStorage = new LocalStorage<CitiesStorage<CitySettings>, CitySettings>({token: citiesSettingsToken});

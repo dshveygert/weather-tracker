@@ -8,7 +8,7 @@ import {cityStorage} from '../../../utils/localStorage/utils/localStorage';
 import {generateCityId} from '../../../utils/cityId';
 import {useRootStore} from '../../../store/rootStore.context';
 
-const CitySearch: FC = observer(() => {
+export const CitySearch: FC = observer(() => {
     const [city, setCity] = useState<string>();
     const [citySearch, setCitySearch] = useState<string>('');
     const [cityOptions, setCityOptions] = useState<SelectProps['options']>([]);
@@ -71,4 +71,3 @@ const CitySearch: FC = observer(() => {
                 onClick={handleCityAdd}>{t('buttons.add')}</Button>
     </div>;
 });
-export default CitySearch;
