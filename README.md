@@ -1,7 +1,9 @@
 # Weather App
 
 Just for fun and serves as a test assignment for the React developer position.
+
 View - https://drive.google.com/file/d/1cQzEcOXH7NSeD8AB6OU1HwnMuy8ucjPh/view?usp=drive_link
+
 Tech spec. - https://docs.google.com/document/d/e/2PACX-1vQWmAtMSUIiTECbCttoIAZnlpsSZUQznxFglYZszP_X0_Dn7WnHeC6Qw9IrorGRrLwFmMjilRSDwQrl/pub
 
 ### ToDo
