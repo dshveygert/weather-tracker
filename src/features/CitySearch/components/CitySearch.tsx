@@ -4,7 +4,6 @@ import {Button, Select, SelectProps} from 'antd';
 import './citySearch.sass';
 import useDebounce from "../../../hooks/useDebounce";
 import {useTranslation} from 'react-i18next';
-import {cityStorage} from '../../../utils/localStorage/utils/localStorage';
 import {generateCityId} from '../../../utils/cityId';
 import {useRootStore} from '../../../store/rootStore.context';
 
@@ -15,7 +14,7 @@ export const CitySearch: FC = observer(() => {
     const debouncedCitySearch = useDebounce(citySearch, 1000);
     const {t} = useTranslation();
     const {
-        citiesStore: {searchCityLoading, searchedCity, searchCity}
+        citiesStore: {searchCityLoading, searchedCity, searchCity, isCityListReachedLimit, addCityToList}
     } = useRootStore();
     const handleSearch = (searchText: string) => {
         setCitySearch(searchText);
@@ -29,14 +28,11 @@ export const CitySearch: FC = observer(() => {
         const cityToAdd = searchedCity.find(item => {
             return generateCityId(item) === city;
         });
-        if (cityToAdd) {
-            const {name, country, lat, lon} = cityToAdd;
-            const id = generateCityId(cityToAdd);
-            cityToAdd && cityStorage.addItem(id, {cityName: name, country, lat, lon, id});
-        }
+        cityToAdd && addCityToList(cityToAdd);
+        setCity('');
     }, [city]);
 
-    const isAddCityDisabled = !city;
+    const isAddCityDisabled = !city || isCityListReachedLimit;
 
     useEffect(() => {
         if (debouncedCitySearch) {

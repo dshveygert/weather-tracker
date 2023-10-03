@@ -61,3 +61,7 @@ export type WeatherByCoordinatesResponse = {
     cod: number;
     name: string;
 }
+
+export type Weather = WeatherByCoordinatesResponse & {cityId: string};
+
+export type WeatherStorage<T> = {[cityId: string]: T};
