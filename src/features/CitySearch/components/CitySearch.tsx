@@ -29,6 +29,7 @@ export const CitySearch: FC = observer(() => {
             return generateCityId(item) === city;
         });
         cityToAdd && addCityToList(cityToAdd);
+        setCity('');
     }, [city]);
 
     const isAddCityDisabled = !city || isCityListReachedLimit;

@@ -11,7 +11,7 @@ export class CitiesStore {
     private citiesLimit = 7;
     private searchCityRequest = new ApiRequests<string, City[]>({
         apiFunction: getCityList
-    })
+    });
 
     constructor() {
         makeObservable(this, {
@@ -19,7 +19,7 @@ export class CitiesStore {
             searchedCity: computed,
             searchCityLoading: computed,
             searchCity: action,
-            addCityToList: action
+            updateCitiesInList: action
         });
     }
 
@@ -35,6 +35,10 @@ export class CitiesStore {
         return Object.keys(this.cities).length >= this.citiesLimit;
     }
 
+    updateCitiesInList = (data: CitiesStorage<CityStorage>) => {
+        this.cities = data;
+    }
+
     searchCity = async (name: string) => {
         return await this.searchCityRequest.send(name);
     }
@@ -44,9 +48,14 @@ export class CitiesStore {
             const {name, country, lat, lon} = city;
             const id = generateCityId(city);
             const newCity = {cityName: name, country, lat, lon, id};
-            this.cities[id] = newCity;
+            this.updateCitiesInList({...this.cities, [id]: newCity});
             cityStorage.addItem(id, newCity)
         }
+    }
+
+    initCitiesFromLocalStorage = () => {
+        const cities = cityStorage.getItem();
+        this.updateCitiesInList(cities);
     }
 
 }
