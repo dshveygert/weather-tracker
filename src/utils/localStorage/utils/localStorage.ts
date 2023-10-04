@@ -26,6 +26,15 @@ class LocalStorage<DataType, ItemType> {
         return this.getStorageItem();
     }
 
+    removeItem = (id: string) => {
+        const existItems = this.getStorageItem();
+        if (!!existItems && typeof existItems === 'object' && existItems.hasOwnProperty(id)) {
+            // @ts-ignore TODO Fix it
+            delete existItems[id];
+            this.setStorageItem(JSON.stringify(existItems));
+        }
+    }
+
     private setStorageItem = (data: string): void => {
         localStorage.setItem(this.token, data);
     };

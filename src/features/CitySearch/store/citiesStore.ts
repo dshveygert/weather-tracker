@@ -2,9 +2,9 @@ import {action, computed, makeObservable, observable} from 'mobx';
 import ApiRequests from '../../../services/apiRequests';
 import {City} from '../../../types/sharedTypes';
 import {getCityList} from '../api/getCityList';
-import {CitiesStorage, CityStorage} from "../../../utils/localStorage";
-import {generateCityId} from "../../../utils/cityId";
-import {cityStorage} from "../../../utils/localStorage/utils/localStorage";
+import {CitiesStorage, CityStorage} from '../../../utils/localStorage';
+import {generateCityId} from '../../../utils/cityId';
+import {cityStorage} from '../../../utils/localStorage/utils/localStorage';
 
 export class CitiesStore {
     cities: CitiesStorage<CityStorage> = {};
@@ -51,6 +51,13 @@ export class CitiesStore {
             this.updateCitiesInList({...this.cities, [id]: newCity});
             cityStorage.addItem(id, newCity)
         }
+    }
+
+    removeCityFromList = (cityId: string) => {
+        const cities = {...this.cities};
+        delete cities[cityId];
+        this.updateCitiesInList(cities);
+        cityStorage.removeItem(cityId);
     }
 
     initCitiesFromLocalStorage = () => {

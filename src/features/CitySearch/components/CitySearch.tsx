@@ -28,8 +28,10 @@ export const CitySearch: FC = observer(() => {
         const cityToAdd = searchedCity.find(item => {
             return generateCityId(item) === city;
         });
-        cityToAdd && addCityToList(cityToAdd);
-        setCity('');
+        if (cityToAdd) {
+            addCityToList(cityToAdd);
+            setCity('');
+        }
     }, [city]);
 
     const isAddCityDisabled = !city || isCityListReachedLimit;

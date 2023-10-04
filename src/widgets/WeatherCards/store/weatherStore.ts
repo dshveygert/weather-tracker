@@ -25,23 +25,23 @@ export class WeatherStore {
 
     requestWeatherForCityList = async (data: CitiesStorage<CityStorage>) => {
         const weather: WeatherStorage<Weather> = {};
-        const cities = data && Object.keys(data).map(key => {
-            const {id, lat, lon} = data[key];
-            return {
-                id,
-                lat,
-                lon
-            };
-        })
-        console.log('cities', cities);
+        const cities = data && Object.keys(data)
+            .filter(key => {
+                return Object.keys(this.weather).findIndex(cityId => cityId === key) < 0;
+            })
+            .map(key => {
+                const {id, lat, lon} = data[key];
+                return {id, lat, lon};
+            });
+
         for (let i = 0; i < cities?.length; i++) {
             const {id, lat, lon} = cities[i];
-            const result = await this.getWeatherByCoordinates({lat, lon, units: TemperatureUnit.Celsius});
+            const result = await this.getWeatherByCoordinates({lat, lon, units: TemperatureUnit.Celsius}); // ToDo use real units
             if (result) {
                 weather[id] = {cityId: id, ...result};
             }
+            this.weather = {...this.weather, ...weather};
         }
-        this.weather = weather;
     }
 
     private getWeatherByCoordinates = async (coordinates: WeatherByCoordinatesRequest) => {
